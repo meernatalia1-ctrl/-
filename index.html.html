@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Работа установки обессоливания нефти</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#0b2038;--fg:#f4f6f8;--mut:#9fb3c8;--oil:#e0a526;--water:#3aa0ff;--acc:#4cc2ff}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;height:100%;background:#0b2038;color:var(--fg);font-family:Arial,Helvetica,sans-serif;display:flex;flex-direction:column}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;gap:12px;flex-wrap:wrap}
+h1{font-size:clamp(16px,2.4vw,28px);margin:0}
+header span{color:var(--mut);font-size:clamp(12px,1.4vw,16px)}
+button{background:#1f6fb2;color:#fff;border:0;border-radius:8px;padding:10px 18px;font-size:16px;cursor:pointer}
+svg{flex:1;min-height:0;width:100%}
+#cap{padding:14px 24px 20px;background:#102c4d;display:flex;gap:16px;align-items:center}
+#num{font-size:clamp(28px,5vw,56px);font-weight:700;color:var(--oil);min-width:1.2em}
+#txt b{display:block;font-size:clamp(16px,2.4vw,28px)}
+#txt span{color:var(--mut);font-size:clamp(13px,1.6vw,19px)}
+.pipe{fill:none;stroke:#7c8da1;stroke-width:26;stroke-linecap:round}
+.oilp{fill:none;stroke:var(--oil);stroke-width:12;opacity:.9}
+.lab text{fill:var(--mut);font-size:20px;text-anchor:middle}
+.lab rect{fill:none;stroke:#3b5878;stroke-width:2;rx:10}
+.lab.on text{fill:#fff;font-weight:700}.lab.on rect{stroke:var(--acc);stroke-width:4}
+.eq{fill:#5d7189;stroke:#9fb3c8;stroke-width:3}
+.on-eq .eq,.eq.on{stroke:var(--acc);stroke-width:6}
+.el{stroke:#cfe9ff;stroke-width:5;opacity:.35}
+.field .el{animation:zap 1s infinite alternate}
+@keyframes zap{from{opacity:.25}to{opacity:1;filter:drop-shadow(0 0 6px #4cc2ff)}}
+.wd{fill:var(--water);opacity:0;transform-box:fill-box;transform-origin:center;animation:fall 7s linear infinite}
+@keyframes fall{0%{opacity:0;transform:translateY(0) scale(.5)}10%{opacity:.9}55%{transform:translateY(60px) scale(1.5)}100%{opacity:.9;transform:translateY(150px) scale(2.2)}}
+.od{fill:var(--oil);opacity:0;animation:rise 6s linear infinite}
+@keyframes rise{0%{opacity:0;transform:translateY(0)}15%{opacity:.8}100%{opacity:.8;transform:translateY(-120px)}}
+.paused *{animation-play-state:paused!important}
+</style></head><body>
+<header><div><h1>Установка обессоливания нефти</h1><span>Патент РК № 12868 · Шеина Н.Е.</span></div><button id="pp">⏸ Пауза</button></header>
+<svg id="s" viewBox="0 0 1600 780" preserveAspectRatio="xMidYMid meet" aria-label="Анимированная схема работы установки обессоливания нефти">
+<!-- pipes -->
+<path class="pipe" d="M30 470H760"/>
+<path class="oilp" d="M30 470H760"/>
+<path class="pipe" d="M560 300V470"/><path class="pipe" d="M650 300V470"/>
+<path class="pipe" d="M1330 340V230H1520"/><path class="pipe" d="M1130 640V740H1520"/>
+<!-- pump -->
+<g id="e1"><circle class="eq" cx="130" cy="470" r="50"/><circle cx="130" cy="470" r="22" fill="#cfe9ff"><animateTransform attributeName="transform" type="rotate" from="0 130 470" to="360 130 470" dur="1.2s" repeatCount="indefinite"/></circle><rect x="118" y="465" width="24" height="10" fill="#0b2038"><animateTransform attributeName="transform" type="rotate" from="0 130 470" to="360 130 470" dur="1.2s" repeatCount="indefinite"/></rect></g>
+<!-- heater -->
+<g id="e2"><rect class="eq" x="290" y="425" width="170" height="90" rx="14"/><path d="M310 470q15-25 30 0t30 0t30 0t30 0" fill="none" stroke="#ff7a3d" stroke-width="6"><animate attributeName="stroke" values="#ff7a3d;#ffd23d;#ff7a3d" dur="1.5s" repeatCount="indefinite"/></path></g>
+<!-- mixer -->
+<g id="e3"><rect class="eq" x="535" y="430" width="140" height="80" rx="12"/><path d="M560 470l20-20 20 40 20-40 20 20" fill="none" stroke="#cfe9ff" stroke-width="5"/></g>
+<!-- vessel -->
+<g id="e5"><rect class="eq" x="760" y="340" width="700" height="300" rx="140" fill="#4a5f78"/>
+<clipPath id="c"><rect x="772" y="352" width="676" height="276" rx="130"/></clipPath>
+<g clip-path="url(#c)"><rect x="760" y="340" width="700" height="150" fill="#b57f12"/><rect x="760" y="490" width="700" height="150" fill="#1b5e9e"/><rect x="760" y="486" width="700" height="8" fill="#6ec1ff" opacity=".6"/>
+<g id="drops"></g></g>
+<g id="field" class="field"><g id="els"></g></g>
+<text x="830" y="420" fill="#fff" font-size="24" font-weight="700">Нефть</text><text x="830" y="600" fill="#fff" font-size="24" font-weight="700">Рассол (вода с солями)</text></g>
+<!-- outputs arrows -->
+<path d="M1520 205l50 25-50 25z" fill="var(--oil)"/><path d="M1520 715l50 25-50 25z" fill="var(--water)"/>
+<text x="1420" y="190" fill="#f4f6f8" font-size="22" text-anchor="middle">Обессоленная нефть</text><text x="1400" y="700" fill="#f4f6f8" font-size="22" text-anchor="middle">Сброс рассола</text>
+<text x="30" y="430" fill="#f4f6f8" font-size="22">Сырая нефть (с солями)</text>
+<text x="560" y="270" fill="#6ec1ff" font-size="20" text-anchor="middle">Промывная вода</text><text x="690" y="300" fill="#c7a6ff" font-size="20" text-anchor="start">Деэмульгатор</text>
+<g id="fl"></g>
+<!-- labels -->
+<g class="lab" id="l1"><rect x="60" y="560" width="140" height="44"/><text x="130" y="590">1 Насос</text></g>
+<g class="lab" id="l2"><rect x="285" y="560" width="180" height="44"/><text x="375" y="590">2 Подогреватель</text></g>
+<g class="lab" id="l3"><rect x="520" y="560" width="170" height="44"/><text x="605" y="590">3 Смеситель</text></g>
+<g class="lab" id="l4"><rect x="1000" y="680" width="260" height="44" style="display:none"/></g>
+<g class="lab" id="l4b"><rect x="1000" y="285" width="330" height="44"/><text x="1165" y="315">4 Электроды (электрополе)</text></g>
+<g class="lab" id="l5"><rect x="790" y="660" width="260" height="44"/><text x="920" y="690">5 Отстойник</text></g>
+<g class="lab" id="l6"><rect x="40" y="680" width="250" height="44"/><text x="165" y="710">6 Система управления</text></g>
+</svg>
+<div id="cap"><div id="num">1</div><div id="txt"><b></b><span></span></div></div>
+<script>
+const NS="http://www.w3.org/2000/svg",$=i=>document.getElementById(i);
+function mk(t,a,p){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);p.appendChild(e);return e}
+// particles along inlet pipe
+for(let i=0;i<14;i++){const c=mk("circle",{r:6,fill:"#ffd77a"},$("fl"));const m=mk("animateMotion",{path:"M30 470H760",dur:"7s",begin:-i*0.5+"s",repeatCount:"indefinite"},c)}
+// electrodes
+for(let i=0;i<9;i++){mk("line",{class:"el",x1:1000+i*40,y1:352,x2:1000+i*40,y2:480},$("els"))}
+// droplets
+for(let i=0;i<26;i++){const x=790+Math.random()*620,d=(Math.random()*-7).toFixed(2);
+const w=mk("circle",{class:"wd",cx:x,cy:370+Math.random()*60,r:4+Math.random()*3},$("drops"));w.style.animationDelay=d+"s";
+const o=mk("circle",{class:"od",cx:790+Math.random()*620,cy:600,r:4+Math.random()*3},$("drops"));o.style.animationDelay=d+"s"}
+const S=[
+["Подача","Насос подаёт сырую нефть с содержанием солей в установку.",["l1","e1"]],
+["Нагрев","Подогреватель снижает вязкость нефти и готовит её к разделению.",["l2","e2"]],
+["Смешение","В смесителе нефть смешивается с промывной водой и деэмульгатором.",["l3","e3"]],
+["Электрополе","Электростатическая система укрупняет мелкие капли солёной воды.",["l4b","field"]],
+["Отстой","Крупные капли воды оседают вниз в горизонтальном отстойнике.",["l5","e5"]],
+["Выход","Обессоленная нефть уходит сверху, рассол сбрасывается снизу. Процессом управляет система управления.",["l6","e5"]]];
+let k=0,run=true,t;
+function show(){document.querySelectorAll(".lab").forEach(e=>e.classList.remove("on"));document.querySelectorAll(".eq").forEach(e=>e.classList.remove("on"));
+const s=S[k];$("num").textContent=k+1;$("txt").querySelector("b").textContent=s[0];$("txt").querySelector("span").textContent=s[1];
+s[2].forEach(id=>{const e=$(id);if(!e)return;if(e.classList.contains("lab"))e.classList.add("on");else e.querySelectorAll(".eq").forEach(q=>q.classList.add("on"))});
+$("field").style.display=(k>=3)?"":"none"}
+function loop(){clearInterval(t);t=setInterval(()=>{k=(k+1)%S.length;show()},5000)}
+$("pp").onclick=()=>{run=!run;document.body.classList.toggle("paused",!run);const s=$("s");run?s.unpauseAnimations():s.pauseAnimations();$("pp").textContent=run?"⏸ Пауза":"▶ Играть";run?loop():clearInterval(t)};
+show();loop();
+</script></body></html>
